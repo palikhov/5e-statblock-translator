@@ -11,7 +11,7 @@ abilities_dict = {
     "Undead Fortitude": "Стойкость нежити",
     "If damage reduces": "Если урон понижает хиты",
     "it must make a Constitution saving throw with a DC of 5 + the damage taken, unless the damage is radiant or from a critical hit. On a success,":
-        "он должен пройти спасбросок Телосложения против Сл 5 + полученный урон, если только урон не от сияния или критического попадания. При успехе хиты",
+        "он должен пройти спасбросок Телосложения против КС 5 + полученный урон, если только урон не лучистый или критического попадания. При успехе хиты",
     "drops to 1 hit point instead": "вместо этого снижаются до 1",
     "Undead Nature": "Природа нежити",
     "Ooze Nature": "Природа слизи",
