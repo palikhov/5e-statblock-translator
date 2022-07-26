@@ -65,7 +65,7 @@ def replace_cr(line):
 
 
 def replace_multiattack(line):
-    line = line.replace("Multiattack", "Мультиатака").replace("melee attacks", "рукопашные атаки").\
+    line = line.replace("Multiattack", "Мультиатака").replace("melee attacks", "атаки ближнего боя").\
         replace("ranged attacks", "дальнобойные атаки").replace("attacks", "атаки").replace("makes", "совершает").\
         replace("two", "две").replace("three", "три").replace("one with", "одну с помощью")
 
@@ -81,9 +81,9 @@ def translate_spell(line, dic):
         newline = "{0} {1} [{2}], ".format(newline.strip(), spell_ru.strip(), spell.strip())
     newline = replace_other(newline, dic)
     newline = newline.replace("Wisdom", "Мудрости").replace("Intelligence", "Интеллекте").\
-        replace("Charisma", "Харизме").replace("druid", "друида").replace("wizard", "чародея").\
-        replace("bard", "барда").replace("cleric", "жреца").replace("paladin", "паладина").\
-        replace("rander", "ренжера").replace("sorcerer", "волшебника").replace("warlock", "колдуна")
+        replace("Charisma", "Харизме").replace("druid", "друида").replace("wizard", "волшебника").\
+        replace("bard", "барда").replace("cleric", "клерика").replace("paladin", "паладина").\
+        replace("rander", "рейнджера").replace("sorcerer", "чародея").replace("warlock", "колдуна")
     return newline[:-2]
 
 
@@ -119,18 +119,18 @@ def replacer(text, dic):
                     dc = None
                 comp = str(match.group("comp"))
                 if dc:
-                    save = " (спас бросок Сл {dc})".format(dc=dc)
+                    save = " (спас бросок КС {dc})".format(dc=dc)
                 else:
                     save = ""
-                line = "Врождённое колдовство. Базовой характеристикой {name} является {abil}{save}. Он может накладывать следующие заклинания, не нуждаясь {comp} компонентах"\
+                line = "Врождённое колдовство. Заклинательной характеристикой {name} является {abil}{save}. Он может сотворять следующие заклинания, не нуждаясь {comp} компонентах"\
                     .format(name=name, abil=abil, save=save, comp=comp)
 
         elif "spellcasting" in line_lower:
             line = re.sub(r"Spellcasting. ([\s\w]+) is a.? ([\d]+)[\w]+-level spellcaster.",
-                          r"Использование заклинаний. \1 является заклинателем \2 уровня.",
+                          r"Сотворение заклинаний. \1 является заклинателем \2 уровня.",
                           line)
             line = re.sub(r"(?:[\s\w]+)spellcasting ability is (\w+) \(spell save(?:\sDC|)\s(\d+), ([\d+]+) to hit with spell attacks\).",
-                          r" Его способность к заклинаниям основана на \1 (Сл спасброска от заклинаний \2, \3 к атакам заклинаниями).",
+                          r" Его заклинательная характеристика -  \1 (КС спасброска заклинаний \2, \3 к атакам заклинаниями).",
                           line)
             line = re.sub(r"([\s\w]+) has the following (?:(\w+)\s|)spells prepared",
                           r"\1 обладает следующими заготовленными заклинаниями \2",
@@ -146,12 +146,12 @@ def replacer(text, dic):
 
         # elif "keen smell" in line_lower:
         line = re.sub(r"Keen Smell. ([\s\w]+) has advantage on Wisdom \(Perception\) checks that rely on smell",
-                          r"Тонкий нюх. \1 совершает с преимуществом проверки Мудрости (Внимательность), полагающиеся на обоняние",
+                          r"Тонкий нюх. \1 совершает с преимуществом проверки Мудрости (Восприятия), полагающиеся на обоняние",
                           line)
 
         # elif "keen sight and smell" in line_lower:
         line = re.sub(r"Keen Sight and Smell. ([\s\w]+) has advantage on Wisdom \(Perception\) checks that rely on sight or smell.+",
-                          r"Острый слух и тонкий нюх. \1 совершает с преимуществом проверки Мудрости (Внимательность), полагающиеся на слух и обоняние",
+                          r"Острый слух и тонкий нюх. \1 совершает с преимуществом проверки Мудрости (Восприятия), полагающиеся на слух и обоняние",
                           line)
 
         line = re.sub(r"Change Shape. ([\s\w]+) magically polymorphs into a ([\s\w]+) it has seen, or back into its true form.",
@@ -159,11 +159,11 @@ def replacer(text, dic):
                           line)
 
         line = re.sub(r"The target must make a DC (\d+) (\w+) saving throw",
-                          r"Цель должна совершить спасбросок \2 со Сл \1",
+                          r"Цель должна совершить спасбросок \2 КС \1",
                           line)
 
         line = re.sub(r"If the target is a creature, it must succeed on a DC (\d+) Strength saving throw or be knocked prone",
-                          r"Если цель — существо, она должна преуспеть в спасброске Силы со Сл \1, иначе будет сбита с ног",
+                          r"Если цель — существо, она должна преуспеть в спасброске Силы КС \1, иначе будет сбита с ног",
                           line)
 
         # else:
